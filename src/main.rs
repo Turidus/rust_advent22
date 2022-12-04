@@ -3,6 +3,7 @@ extern crate core;
 mod day_one;
 mod day_two;
 mod day_three;
+mod day_four;
 
 use std::{env, fs};
 use std::path::Path;
@@ -51,6 +52,14 @@ fn main() {
             }
             else {
                 println! ("The answer is: {:?}", day_three::puzzle_two::run(read_path(&*path)))
+            }
+        }
+        4 => {
+            if puzzle == 1 {
+                println! ("The answer is: {:?}", day_four::puzzle_one::run(read_path(&*path)))
+            }
+            else {
+                println! ("The answer is: {:?}", day_four::puzzle_two::run(read_path(&*path)))
             }
         }
         _ => {panic!("{}", usage)}
