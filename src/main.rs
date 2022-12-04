@@ -1,4 +1,11 @@
-use std::env;
+extern crate core;
+
+mod day_one;
+mod day_two;
+mod day_three;
+
+use std::{env, fs};
+use std::path::Path;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -17,51 +24,40 @@ fn main() {
 
     let base = env::current_dir().unwrap();
     let path= match base.parent(){
-        None => {base.join("inputFiles").join(f_name)}
-        Some(parent) => {parent.join("inputFiles").join(f_name)}
+        None => {base.join("input_files").join(f_name)}
+        Some(parent) => {parent.join("input_files").join(f_name)}
     };
 
     match day {
         1 => {
             if puzzle == 1 {
-                day_one::puzzle_one::run(&*path)
+                println! ("The answer is: {:?}", day_one::puzzle_one::run(read_path(&*path)))
             }
             else {
-                day_one::puzzle_two::run(&*path)
+                println! ("The answer is: {:?}", day_one::puzzle_two::run(read_path(&*path)))
             }
         }
         2 => {
             if puzzle == 1 {
-                day_two::puzzle_one::run(&*path)
+                println! ("The answer is: {:?}", day_two::puzzle_one::run(read_path(&*path)))
             }
             else {
-                day_two::puzzle_two::run(&*path)
+                println! ("The answer is: {:?}", day_two::puzzle_two::run(read_path(&*path)))
             }
         }
         3 => {
             if puzzle == 1 {
-                day_three::puzzle_one::run(&*path)
+                println! ("The answer is: {:?}", day_three::puzzle_one::run(read_path(&*path)))
             }
             else {
-                day_three::puzzle_two::run(&*path)
-            }
-        }
-        4 => {
-            if puzzle == 1 {
-                day_four::puzzle_one::run(&*path)
-            }
-            else {
-                day_four::puzzle_two::run(&*path)
-            }
-        }
-        5 => {
-            if puzzle == 1 {
-                day_five::puzzle_one::run(&*path)
-            }
-            else {
-                day_five::puzzle_two::run(&*path)
+                println! ("The answer is: {:?}", day_three::puzzle_two::run(read_path(&*path)))
             }
         }
         _ => {panic!("{}", usage)}
     }
+}
+
+fn read_path(path: &Path) -> String {
+   return fs::read_to_string(path)
+        .expect("Reading the file was not possible.");
 }

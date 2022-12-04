@@ -1,52 +1,61 @@
 pub mod puzzle_one {
-    use std::fs;
-    use std::path::Path;
+    use std::cmp::max;
 
 
-    pub fn run(path: &Path) {
-        let input = fs::read_to_string(path)
-            .expect("Reading the file was not possible.");
-
+    pub fn run(input: String) -> i32{
         let lines = input.lines();
-
-        let mut acc = 0;
-        let mut before = i32::MAX;
-
-        for line in lines {
-            let num: i32 = line.trim().parse().expect("Line was not a number");
-            if num > before {acc+=1};
-            before = num;
+        let mut answer:i32 = 0;
+        let mut acc:i32 = 0;
+        for line in lines{
+            if line.is_empty() {
+                answer = max(answer,acc);
+                acc = 0
+            }
+            else {
+                acc += line.parse::<i32>().expect("String was not a number");
+            }
         }
-        println!("The result is: {}", acc)
+        answer = max(answer,acc);
+        return answer
     }
 }
 
 pub mod puzzle_two {
-    use std::fs;
-    use std::path::Path;
-
-    pub fn run(path: &Path){
-        let input = fs::read_to_string(path)
-            .expect("Reading the file was not possible.");
-
+    pub fn run(input: String) -> i32{
         let lines = input.lines();
-
-        let mut numbers: Vec<i32> = Vec::new();
-        for line in lines {
-             numbers.push(line.trim().parse().expect("Line was not a number"));
+        let mut answer_list:Vec<i32> = Vec::new();
+        let mut acc:i32 = 0;
+        for line in lines{
+            if line.is_empty() {
+                answer_list.push(acc);
+                acc = 0
+            }
+            else {
+                acc += line.parse::<i32>().expect("String was not a number");
+            }
         }
-        let mut sliding_averages: Vec<i32> = Vec::new();
-        for i in 0..numbers.len()-2 {
-            sliding_averages.push(numbers[i] + numbers[i+1] + numbers[i+2])
-        }
+        answer_list.push(acc);
+        answer_list.sort_by(|a, b| b.cmp(a));
+        return answer_list[0] + answer_list[1] + answer_list[2]
+    }
+}
 
-        let mut acc = 0;
-        let mut before = i32::MAX;
+#[cfg(test)]
+mod tests_p1 {
+    use crate::day_one::puzzle_one::*;
 
-        for num in sliding_averages {
-            if num > before {acc+=1};
-            before = num;
-        }
-        println!("The result is: {}", acc)
+    #[test]
+    fn it_works(){
+        assert_eq!(11, run("2\n3\n4\n\n5\n6".parse().unwrap()))
+    }
+}
+
+#[cfg(test)]
+mod tests_p2 {
+    use crate::day_one::puzzle_two::*;
+
+    #[test]
+    fn it_works(){
+        assert_eq!(9, run("1\n\n2\n\n3\n\n4".parse().unwrap()))
     }
 }
