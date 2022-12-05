@@ -26,7 +26,7 @@ pub mod puzzle_two {
 }
 
 mod utils {
-    use lazy_regex::{regex, Regex, regex_captures};
+    use lazy_regex::{regex_captures};
 
     pub fn check_line(line: &str) -> bool{
         let result = regex_captures!(r#"(\d+)-(\d+),(\d+)-(\d+)"#, line).unwrap();

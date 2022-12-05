@@ -4,6 +4,7 @@ mod day_one;
 mod day_two;
 mod day_three;
 mod day_four;
+mod day_five;
 
 use std::{env, fs};
 use std::path::Path;
@@ -60,6 +61,14 @@ fn main() {
             }
             else {
                 println! ("The answer is: {:?}", day_four::puzzle_two::run(read_path(&*path)))
+            }
+        }
+        5 => {
+            if puzzle == 1 {
+                println! ("The answer is: {:?}", day_five::puzzle_one::run(read_path(&*path)))
+            }
+            else {
+                println! ("The answer is: {:?}", day_five::puzzle_two::run(read_path(&*path)))
             }
         }
         _ => {panic!("{}", usage)}
